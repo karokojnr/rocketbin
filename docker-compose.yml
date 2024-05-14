@@ -1,0 +1,39 @@
+version: "3.8"
+services:
+  db:
+    image: postgres:16.2-alpine
+    container_name: rocketbin-db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    networks:
+      - rocketbin-network
+    volumes:
+      - rocketbin-db-data:/var/lib/postgresql/data
+  api:
+    build: .
+    container_name: rocketbin-api
+    environment:
+      DB_USERNAME: "postgres"
+      DB_PASSWORD: "postgres"
+      DB_DB: "postgres"
+      DB_HOST: "db"
+      DB_TABLE: "postgres"
+      DB_PORT: "5432"
+      SSL_MODE: "disable"
+    ports:
+      - "50051:50051"
+    depends_on:
+      - db
+    networks:
+      - rocketbin-network
+
+volumes:
+  rocketbin-db-data:
+
+networks:
+  rocketbin-network:
+    driver: bridge
