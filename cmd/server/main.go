@@ -4,7 +4,6 @@ import "log"
 
 func Run() error {
 	return nil
-
 }
 
 func main() {
@@ -12,5 +11,4 @@ func main() {
 	if err := Run(); err != nil {
 		log.Fatal(err)
 	}
-
 }
