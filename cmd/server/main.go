@@ -13,12 +13,17 @@ func Run() error {
 		return err
 	}
 
+	err = rocketStore.Migrate()
+	if err != nil {
+		log.Println("error running db migrations")
+		return err
+	}
+
 	_ = rocket.New(rocketStore)
 	return nil
 }
 
 func main() {
-
 	if err := Run(); err != nil {
 		log.Fatal(err)
 	}
