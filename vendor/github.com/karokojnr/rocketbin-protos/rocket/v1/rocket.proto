@@ -1,0 +1,48 @@
+syntax = "proto3";
+option go_package = "./rocket/v1";
+
+package rocket;
+
+// -- Rocket --
+message Rocket {
+    string id = 1;
+    string name = 2;
+    string type = 3;
+}
+
+
+service RocketService {
+    rpc GetRocket (GetRocketRequest) returns (GetRocketResponse);
+    rpc AddRocket (AddRocketRequest) returns (AddRocketResponse);
+    rpc DeleteRocket (DeleteRocketRequest) returns (DeleteRocketResponse);
+}
+
+// -- Get Rocket --
+message GetRocketRequest {
+    string id = 1;
+}
+
+// -- Get Rocket Response --
+message GetRocketResponse {
+    Rocket rocket = 1;
+}
+
+// -- Add Rocket --
+message AddRocketRequest {
+    Rocket rocket = 1;
+}
+
+// -- Add Rocket Response --
+message AddRocketResponse {
+    Rocket rocket = 1;
+}
+
+// -- Delete Rocket --
+message DeleteRocketRequest {
+    Rocket rocket = 1;
+}
+
+// -- Delete Rocket Response --
+message DeleteRocketResponse {
+    string status = 1;
+}
