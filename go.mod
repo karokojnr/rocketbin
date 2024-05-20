@@ -25,6 +25,7 @@ require (
 	github.com/jmoiron/sqlx v1.4.0
 	github.com/karokojnr/rocketbin-protos v0.0.0-20240517083011-3fc4b5042338
 	github.com/pmezard/go-difflib v1.0.0 // indirect
+	github.com/satori/go.uuid v1.2.0
 	google.golang.org/grpc v1.64.0
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
