@@ -19,7 +19,7 @@ func New() (Store, error) {
 	dbHost := os.Getenv("DB_HOST")
 	dbPort := os.Getenv("DB_PORT")
 	dbTable := os.Getenv("DB_TABLE")
-	dbSSLMode := os.Getenv("DB_SSL_MODE")
+	dbSSLMode := os.Getenv("SSL_MODE")
 
 	connectionString := fmt.Sprintf(
 		"host=%s port=%s user=%s dbname=%s password=%s sslmode=%s",
@@ -39,8 +39,18 @@ func New() (Store, error) {
 	}, nil
 }
 
+// GetRocketByID - retrieves a rocket from the database and returns it or an error.
 func (s Store) GetRocketByID(id string) (rocket.Rocket, error) {
-	return rocket.Rocket{}, nil
+	var rkt rocket.Rocket
+	row := s.db.QueryRow(
+		`SELECT id FROM rockets WHERE id=(?)::uuid`,
+		id,
+	)
+	err := row.Scan(&rkt)
+	if err != nil {
+		return rocket.Rocket{}, err
+	}
+	return rkt, nil
 }
 
 func (s Store) InsertRocket(rkt rocket.Rocket) (rocket.Rocket, error) {
