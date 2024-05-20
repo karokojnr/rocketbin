@@ -6,6 +6,7 @@ import (
 	"net"
 
 	rkt "github.com/karokojnr/rocketbin-protos/rocket/v1"
+
 	"github.com/karokojnr/rocketbin/internal/rocket"
 	"google.golang.org/grpc"
 )
@@ -13,14 +14,15 @@ import (
 // RocketService - defines the methods that the handler will
 // use to interact with the service
 type RocketService interface {
-	GetRocketByID(ctx context.Context, id string) (*rocket.Rocket, error)
-	CreateRocket(ctx context.Context, rocket *rocket.Rocket) (*rocket.Rocket, error)
+	GetRocketByID(ctx context.Context, id string) (rocket.Rocket, error)
+	InsertRocket(ctx context.Context, rocket rocket.Rocket) (rocket.Rocket, error)
 	DeleteRocket(ctx context.Context, id string) error
 }
 
 // Handler - will handle incoming gRPC requests
 type Handler struct {
 	RocketService RocketService
+	rkt.UnimplementedRocketServiceServer
 }
 
 // New - creates a new instance of the gRPC Handler

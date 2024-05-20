@@ -1,0 +1,6 @@
+go 1.21.4
+
+use (
+	.
+	/Users/karokojnr/Projects/Rocketbin/rocketbin-protos
+)
