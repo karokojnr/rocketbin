@@ -44,10 +44,10 @@ func New() (Store, error) {
 func (s Store) GetRocketByID(id string) (rocket.Rocket, error) {
 	var rkt rocket.Rocket
 	row := s.db.QueryRow(
-		`SELECT id FROM rockets WHERE id=(?)::uuid`,
+		`SELECT id, type, name FROM rockets WHERE id=$1;`,
 		id,
 	)
-	err := row.Scan(&rkt)
+	err := row.Scan(&rkt.ID, &rkt.Name, &rkt.Type)
 	if err != nil {
 		return rocket.Rocket{}, err
 	}
