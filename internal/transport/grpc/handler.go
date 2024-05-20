@@ -5,10 +5,13 @@ import (
 	"log"
 	"net"
 
+	"github.com/google/uuid"
 	rkt "github.com/karokojnr/rocketbin-protos/rocket/v1"
 
 	"github.com/karokojnr/rocketbin/internal/rocket"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 // RocketService - defines the methods that the handler will
@@ -68,6 +71,11 @@ func (h Handler) GetRocket(ctx context.Context, req *rkt.GetRocketRequest) (*rkt
 
 func (h Handler) AddRocket(ctx context.Context, req *rkt.AddRocketRequest) (*rkt.AddRocketResponse, error) {
 	log.Print("Add Rocket gRPC endpoint hit")
+	if _, err := uuid.Parse(req.Rocket.Id); err != nil {
+		errorStatus := status.Error(codes.InvalidArgument, "uuid is not valid")
+		log.Println("uuid is not valid")
+		return &rkt.AddRocketResponse{}, errorStatus
+	}
 	newRkt, err := h.RocketService.InsertRocket(ctx, rocket.Rocket{
 		ID:   req.Rocket.Id,
 		Type: req.Rocket.Type,

@@ -22,6 +22,7 @@ require (
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/golang-migrate/migrate/v4 v4.17.1
+	github.com/google/uuid v1.6.0
 	github.com/jmoiron/sqlx v1.4.0
 	github.com/karokojnr/rocketbin-protos v0.0.0-20240517083011-3fc4b5042338
 	github.com/pmezard/go-difflib v1.0.0 // indirect
